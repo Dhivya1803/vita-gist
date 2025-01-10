@@ -1,0 +1,155 @@
+.topbar {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    height: 64px;
+    background: white;
+    color:#0066cc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 250px;
+    z-index: 999;
+    transition: left 0.3s ease;
+  }
+
+  .topbar.sidebar-collapsed {
+    left: 60px;
+  }
+
+  /* .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+  } */
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+  }
+
+  .page-title{
+    font-size: 28px;
+    letter-spacing: 1px;
+    color: #004d87;
+  }
+
+  .country-selector {
+    position: relative;
+  }
+
+  .country-display {
+    display: flex;
+    align-items: center;
+  }
+  
+  .flag-icon {
+    width: 24px; /* Adjust size as needed */
+    height: auto;
+    margin-right: 8px; /* Space between flag and code */
+  }
+  
+  .country-display span {
+    font-size: 18px; /* Adjust font size as needed */
+    display: flex;
+    color: #292b2d;
+    font-weight: 600;
+    align-items: center; /* Centers text vertically relative to the flag */
+  }
+  .country-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+
+.flag-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;  /* Ensures circular shape */
+    object-fit: cover;   /* Makes image fully cover the ellipse */
+  }
+
+  .notification-btn {
+    position: relative;
+    color:#292b2d;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+
+  .notification-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #ff4444;
+    color: white;
+    border-radius: 100%;
+    height: 10px;
+    width: 10px;
+    padding: 3px;
+    font-size: 0.62rem;
+    text-align: center;
+  }
+
+  .user-profile {
+    position: relative;
+  }
+
+  .profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+
+  .avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+  }
+
+  .user-info {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: right;
+  }
+
+  .user-name {
+    font-weight: 600;
+    font-size: larger;
+    display: block;
+  }
+
+  .user-email {
+    font-size: 0.875rem;
+    color: #666;
+  }
+
+  @media (max-width: 768px) {
+    .topbar {
+      left:250px;
+    }
+
+    /* .menu-toggle {
+      display: block;
+    } */
+
+    .user-info {
+      display: none;
+    }
+  }

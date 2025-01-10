@@ -1,0 +1,16 @@
+.icon-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .icon-grid button {
+    width: 48px;
+    height: 48px;
+  }
+  .full-width {
+    width: 100%;
+  }
+
+  ::ng-deep .mat-mdc-dialog-container .mat-mdc-dialog-title + .mat-mdc-dialog-content{
+    padding-top: 15px;
+  }

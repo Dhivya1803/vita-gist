@@ -1,0 +1,7 @@
+<mat-menu #menu="matMenu" class="modern-dropdown">
+    <button *ngFor="let option of options" mat-menu-item (click)="option.action()">
+      <img class="menu-icon" [src]="option.icon" alt="{{ option.label }}" />
+      <span class="dd-text">{{ option.label }}</span>
+    </button>
+</mat-menu>
+  

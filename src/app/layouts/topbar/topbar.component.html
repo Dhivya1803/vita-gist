@@ -1,0 +1,43 @@
+<header class="topbar">
+    <!-- Menu Toggle for Mobile -->
+    <!-- <button class="menu-toggle" (click)="toggleSidebar()">
+      <i class="material-icons">menu</i>
+    </button> -->
+
+    <!-- Left Section -->
+    <div class="topbar-left">
+      <h2 class="page-title">{{ currentPage }}</h2>
+    </div>
+
+    <!-- Right Section -->
+    <div class="topbar-right">
+      <!-- Country Selector -->
+      <div class="country-display">
+        <img [src]="selectedCountry.flag" [alt]="selectedCountry.name" class="flag-icon"/>
+        <span class="country-display">{{ selectedCountry.code }}</span>
+      </div>
+
+      <!-- Notifications -->
+      <button class="notification-btn" (click)="toggleNotifications()">
+        <i class="material-icons">notifications</i>
+        <span class="notification-badge" *ngIf="notificationCount > 0">
+          {{ notificationCount }}
+        </span>
+      </button>
+
+      <!-- User Profile -->
+      <div class="user-profile">
+        <button class="profile-btn" (click)="toggleProfileMenu()">
+          <div class="user-info" *ngIf="user">
+            <span class="user-name">{{ user.name }}</span>
+            <span class="user-email">{{ user.email }}</span>
+          </div>
+          <img  [alt]="user?.name" [src]="user?.avatar" class="avatar" />
+        </button>
+        <div class="profile-dropdown" *ngIf="showProfileMenu">
+          <a href="#"><i class="settings"></i>Settings</a>
+          <a href="#"><i class="logout"></i>Logout</a>
+        </div>
+      </div>
+    </div>
+  </header>

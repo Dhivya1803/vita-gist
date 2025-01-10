@@ -1,0 +1,71 @@
+<div class="dialog-container">
+    <div class="dialog-header">
+      <div class="header-content">
+        <div class="icon-container">
+          <i class="material-icons">person_add</i>
+        </div>
+        <div class="header-text">
+          <h2>Add Connections</h2>
+          <p>Send a request to start the digital relationship.</p>
+        </div>
+      </div>
+      <button mat-icon-button (click)="onCancel()">
+        <i class="material-icons">close</i>
+      </button>
+    </div>
+  
+    <div class="dialog-content">
+      <form [formGroup]="searchForm">
+        <!-- Category Selection -->
+        <div class="category-section">
+          <h3>Choose categories</h3>
+          <mat-form-field appearance="outline">
+            <mat-select
+              formControlName="categories"
+              multiple
+              (selectionChange)="onCategoryChange($event)">
+              <mat-option *ngFor="let category of data.categories" [value]="category.id">
+                {{ category.title }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+  
+        <!-- Search Section -->
+        <div class="search-section">
+          <h3>Select Connection</h3>
+          <div class="search-container">
+            <i class="material-icons">search</i>
+            <input
+              matInput
+              formControlName="searchQuery"
+              placeholder="Search for connection..."
+              (input)="onSearch()">
+          </div>
+        </div>
+  
+        <!-- Connection List -->
+        <div class="connection-list">
+          <ul>
+            <li *ngFor="let connection of filteredConnections">
+              <div class="connection-avatar">
+                <span>{{ connection.avatar }}</span>
+              </div>
+              <div class="connection-details">
+                <h4>{{ connection.name }}</h4>
+                <p>{{ connection.email }}</p>
+              </div>
+              <div class="connection-actions">
+                <button mat-button *ngIf="connection.status === 'none'" (click)="openAddConnectionDialog()">
+                  Add
+                </button>
+                <span *ngIf="connection.status === 'pending'">Pending</span>
+                <span *ngIf="connection.status === 'connected'">Connected</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </form>
+    </div>
+  </div>
+  

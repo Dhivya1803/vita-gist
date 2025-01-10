@@ -1,0 +1,259 @@
+<div class="main-container">
+  <div class="main-content">
+    <!-- Document Type Cards -->
+    <div class="document-cards">
+      <div *ngFor="let card of documentCategories" 
+           class="document-card"
+           [class.selected]="card.isActive"
+           (click)="setActiveDocument(card.id)">
+        <div class="card-content">
+          <span class="title">{{card.title}}</span>
+          <span class="subtitle">Documents</span>
+          <div class="count-container">
+            <span class="count">{{card.count}}</span>
+            <div [class]="'icon-container ' + card.icon">
+              <i class="material-icons">{{card.icon}}</i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <div class="list-header">
+      <h2>List Of Documents</h2>
+      <div class="header-actions">
+        <div class="country-selector">
+          <img src="assets/images/usa.png" alt="India flag">
+          <span>USA</span>
+          <i class="material-icons">expand_more</i>
+        </div>
+        <button
+          class="add-new-btn"
+          mat-raised-button
+          [matMenuTriggerFor]="menu"
+          #menuTrigger="matMenuTrigger"
+        >
+          <span class="btn-text">Add New</span>
+          <i class="material-icons expand-icon">{{ menuTrigger.menuOpen ? 'expand_less' : 'expand_more' }}</i>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button 
+            *ngFor="let option of dropdownOptions" 
+            mat-menu-item 
+            (click)="option.action()">
+            <i class="material-icons">{{option.icon}}</i>
+            <span>{{ option.label }}</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+
+    <!-- Document List Section -->
+    <div class="document-list">
+      <div class="search-section">
+        <div class="search-container">
+          <i class="material-icons">search</i>
+          <input class="search-text" type="text" placeholder="Search for document..." 
+                 [(ngModel)]="searchQuery" (ngModelChange)="filterAndUpdateDocuments()">
+        </div>
+        <div class="view-options">
+          <button 
+            class="sort-btn" 
+            mat-raised-button 
+            [matMenuTriggerFor]="sortMenu">
+            <i class="material-icons">sort</i>
+          </button>
+          
+          <mat-menu #sortMenu="matMenu">
+            <button 
+              *ngFor="let option of sortOptions" 
+              mat-menu-item 
+              (click)="option.action()">
+              <i class="material-icons">{{option.icon}}</i>
+              <span>{{ option.label }}</span>
+            </button>
+          </mat-menu>
+          <button class="view-btn" (click)="toggleView()">
+            <i class="material-icons">{{ viewMode === 'grid' ? 'view_list' : 'grid_view' }}</i>
+          </button>  
+        </div>
+      </div>
+  
+      <!-- Display Documents -->
+      <ng-container *ngIf="documents.length > 0; else emptyState">
+        <!-- List View -->
+        <div class="table-container" *ngIf="viewMode === 'list'">
+          <table mat-table [dataSource]="documents" class="document-table">
+            <!-- Document Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Document Name</th>
+              <td mat-cell *matCellDef="let doc">
+                <div class="document-name-cell">
+                  <i class="material-icons">{{getFileIcon(doc.mimeType)}}</i>
+                  <span>{{doc.name}}</span>
+                </div>
+              </td>
+            </ng-container>
+            
+            <!-- Description Column -->
+            <ng-container matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef>Description</th>
+              <td mat-cell *matCellDef="let doc">{{doc.description}}</td>
+            </ng-container>
+
+            <!-- Upload Date Column -->
+            <ng-container matColumnDef="uploadedOn">
+              <th mat-header-cell *matHeaderCellDef>Uploaded On</th>
+              <td mat-cell *matCellDef="let doc">{{formatDate(doc.uploadDate)}}</td>
+            </ng-container>
+
+            <!-- Expiration Date Column -->
+            <ng-container matColumnDef="expiringOn">
+              <th mat-header-cell *matHeaderCellDef>Expiring On</th>
+              <td mat-cell *matCellDef="let doc">
+                {{doc.expirationDate ? formatDate(doc.expirationDate) : 'NA'}}
+              </td>
+            </ng-container>
+
+            <!-- Tags Column -->
+            <ng-container matColumnDef="tags">
+              <th mat-header-cell *matHeaderCellDef>Tags</th>
+              <td mat-cell *matCellDef="let doc">
+                <mat-chip-list>
+                  <mat-chip *ngFor="let tag of doc.tags" color="primary" selected>{{tag}}</mat-chip>
+                </mat-chip-list>
+              </td>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let doc">
+                <button mat-icon-button [matMenuTriggerFor]="actionMenu">
+                  <i class="material-icons">more_vert</i>
+                </button>
+                <mat-menu #actionMenu="matMenu">
+                  <button mat-menu-item (click)="onDocumentAction('view', doc)">
+                    <i class="material-icons">visibility</i>
+                    <span>View</span>
+                  </button>
+                  <button mat-menu-item (click)="onDocumentAction('edit', doc)">
+                    <i class="material-icons">edit</i>
+                    <span>Edit</span>
+                  </button>
+                  <button mat-menu-item (click)="onDocumentAction('share', doc)">
+                    <i class="material-icons">share</i>
+                    <span>Share</span>
+                  </button>
+                  <button mat-menu-item (click)="onDocumentAction('download', doc)">
+                    <i class="material-icons">download</i>
+                    <span>Download</span>
+                  </button>
+                  <button mat-menu-item (click)="onDocumentAction('delete', doc)">
+                    <i class="material-icons">delete</i>
+                    <span>Delete</span>
+                  </button>
+                </mat-menu>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+
+        <!-- Grid View -->
+        <div *ngIf="viewMode === 'grid'" class="grid-view">
+          <div *ngFor="let doc of documents" class="document-card">
+            <div class="document-preview" (click)="openPreview(doc)">
+              <ng-container [ngSwitch]="doc.mimeType">
+                <img *ngSwitchCase="'image/jpeg'" [src]="doc.previewUrl" [alt]="doc.name">
+                <img *ngSwitchCase="'image/png'" [src]="doc.previewUrl" [alt]="doc.name">
+                <div *ngSwitchDefault class="default-preview">
+                  <i class="material-icons">{{getFileIcon(doc.mimeType)}}</i>
+                </div>
+              </ng-container>
+            </div>
+            <div class="document-info">
+              <h3 class="document-name">{{doc.name}}</h3>
+              <p class="document-date">{{formatDate(doc.uploadDate)}}</p>
+              <div class="document-actions">
+                <button mat-icon-button [matMenuTriggerFor]="actionMenu">
+                  <i class="material-icons">more_vert</i>
+                </button>
+                <mat-menu #actionMenu="matMenu">
+                  <button mat-menu-item (click)="onDocumentAction('view', doc)">
+                    <i class="material-icons">visibility</i>
+                    <span>View</span>
+                  </button>
+                  <button mat-menu-item (click)="onDocumentAction('edit', doc)">
+                    <i class="material-icons">edit</i>
+                    <span>Edit</span>
+                  </button>
+                  <button mat-menu-item (click)="onDocumentAction('share', doc)">
+                    <i class="material-icons">share</i>
+                    <span>Share</span>
+                  </button>
+                  <button mat-menu-item (click)="onDocumentAction('download', doc)">
+                    <i class="material-icons">download</i>
+                    <span>Download</span>
+                  </button>
+                  <button mat-menu-item (click)="onDocumentAction('delete', doc)">
+                    <i class="material-icons">delete</i>
+                    <span>Delete</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <mat-paginator
+          [length]="totalDocuments"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[5, 10, 25, 100]"
+          [showFirstLastButtons]="true"
+          (page)="onPageChange($event)"
+          aria-label="Select page">
+        </mat-paginator>
+      </ng-container>
+
+      <!-- Document Preview Modal -->
+      <div *ngIf="isPreviewOpen" class="preview-modal">
+        <div class="preview-content">
+          <div class="preview-header">
+            <h2>{{previewDocument?.name}}</h2>
+            <button mat-icon-button (click)="closePreview()">
+              <i class="material-icons">close</i>
+            </button>
+          </div>
+          <div class="preview-body">
+            <ng-container *ngIf="previewDocument" [ngSwitch]="previewDocument.mimeType">
+              <img *ngSwitchCase="'image/jpeg'" [src]="previewDocument.previewUrl" [alt]="previewDocument.name">
+              <img *ngSwitchCase="'image/png'" [src]="previewDocument.previewUrl" [alt]="previewDocument.name">
+              <iframe *ngSwitchCase="'application/pdf'" [src]="previewDocument.previewUrl" frameborder="0"></iframe>
+              <div *ngSwitchDefault class="no-preview">
+                <i class="material-icons">{{getFileIcon(previewDocument.mimeType)}}</i>
+                <p>Preview not available for this file type</p>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Empty State -->
+      <ng-template #emptyState>
+        <div class="empty-state">
+          <div class="upload-illustration">
+            <img class="docimg" src="assets/images/docempty.png" alt="Upload documents">
+          </div>
+          <h3>No Documents Yet..</h3>
+          <p>Secure and organize your documents by start uploading it.</p>
+          <button class="add-documents-btn" (click)="onAddDocument()">Add documents</button>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

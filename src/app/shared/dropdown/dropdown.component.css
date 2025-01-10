@@ -1,0 +1,45 @@
+.add-new-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    background: #0066cc;
+    cursor: pointer;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    text-transform: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s, background-color 0.2s;
+  }
+  
+  .add-new-btn:hover {
+    background: #005bb5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .add-new-btn i {
+    margin-left: 8px;
+    font-size: 18px;
+    transition: transform 0.2s;
+  }
+  
+  ::ng-deep .modern-dropdown {
+    margin-top: 8px !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+    background-color: white !important;
+  }
+  
+::ng-deep .mat-mdc-menu-content {
+    padding: 10px !important;
+    background-color: white;
+  }
+  
+  ::ng-deep .mat-mdc-menu-item-text{
+    display: flex !important;
+  }
+  

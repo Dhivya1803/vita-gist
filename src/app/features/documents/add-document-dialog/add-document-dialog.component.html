@@ -1,0 +1,156 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <div class="header-content">
+      <div class="upload-icon">
+        <img src="assets/images/cloudadd.svg" alt="Upload">
+      </div>
+      <div class="header-text">
+        <h2>{{ dialogMode === 'add' ? 'Add Document' : 'Edit Document' }}</h2>
+        <p *ngIf="dialogMode === 'add'">{{ currentStep === 1 ? 'Select and upload the documents of your choice' : 'Fill details of the selected document' }}</p>
+      </div>
+    </div>
+    <button mat-icon-button (click)="onCancel()" class="cancel-btn">
+      <img class="close-button" src="assets/images/close-circle.svg" alt="Upload">
+    </button>
+  </div>
+
+  <div class="dialog-content">
+    <form [formGroup]="documentForm">
+      <!-- Step 1: Category Selection and File Upload (only for add mode) -->
+      <ng-container *ngIf="dialogMode === 'add' && currentStep === 1">
+        <div class="category-section">
+          <h3>Choose categories</h3>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select formControlName="categories" multiple (selectionChange)="onCategorySelect($event)">
+              <mat-option *ngFor="let category of data.categories" 
+                        [value]="category.id"
+                        [disabled]="isIdentitySelected && category.id !== 'identity'">
+                {{category.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="section-title">Select Documents</div>
+        
+        <div class="upload-section" [class.has-files]="selectedFiles.length > 0">
+          <div class="upload-area" (click)="fileInput.click()">
+            <input
+              #fileInput
+              type="file"
+              multiple
+              (change)="onFileSelected($event)"
+              [accept]="'.pdf,.doc,.docx,.jpg,.jpeg,.png'"
+              hidden
+            >
+            <img src="assets/images/cloudadd.svg" alt="Upload">
+            <p>Choose the files you want to upload from your device</p>
+            <button mat-flat-button color="primary">Browse Files</button>
+          </div>
+
+          <div *ngIf="selectedFiles.length > 0" class="selected-files">
+            <div *ngFor="let file of selectedFiles; let i = index" class="file-item">
+              <img src="assets/images/file.svg" alt="Upload">
+              <div class="file-details">
+                <span class="file-name">{{file.name}}</span>
+                <span class="file-size">{{getFileSize(file)}}</span>
+              </div>
+              <button mat-icon-button (click)="removeFile(i)">
+                <img src="assets/images/trash.svg" alt="trash">
+              </button>
+            </div>
+            
+            <mat-progress-bar 
+              *ngIf="isUploading"
+              mode="determinate"
+              [value]="uploadProgress"
+              class="upload-progress">
+            </mat-progress-bar>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Step 2: Document Details (for both add and edit modes) -->
+      <ng-container *ngIf="dialogMode === 'edit' || currentStep === 2">
+        <div class="document-details">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Categories</mat-label>
+            <mat-select formControlName="categories" multiple (selectionChange)="onCategorySelect($event)">
+              <mat-option *ngFor="let category of data.categories" 
+                        [value]="category.id"
+                        [disabled]="isIdentitySelected && category.id !== 'identity'">
+                {{category.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Document Name</mat-label>
+            <input matInput formControlName="name" required>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" rows="3"></textarea>
+          </mat-form-field>
+          
+          <!-- Identity Document fields -->
+          <ng-container *ngIf="isIdentitySelected">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Document Type</mat-label>
+              <mat-select formControlName="documentType">
+                <mat-option *ngFor="let type of data.categories[0].documentTypes" [value]="type">
+                  {{type}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Document ID</mat-label>
+              <input matInput formControlName="documentId" required>
+            </mat-form-field>
+          </ng-container>
+          
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Tags</mat-label>
+            <mat-chip-grid #chipList>
+              <mat-chip-row
+                *ngFor="let tag of tags"
+                [removable]="true"
+                (removed)="removeTag(tag)">
+                {{tag}}
+                <img class="removeicon"  matChipRemove src="assets/images/black-circle.svg" alt="cancel">
+              </mat-chip-row>
+              <input
+                placeholder="New tag..."
+                [matChipInputFor]="chipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="true"
+                (matChipInputTokenEnd)="addTag($event)">
+            </mat-chip-grid>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Expiration Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="expirationDate">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </ng-container>
+    </form>
+  </div>
+
+  <div class="dialog-actions">
+    <button mat-button (click)="onCancel()">
+      Cancel
+    </button>
+    <button mat-flat-button 
+            color="primary"
+            [disabled]="isUploading || !documentForm.valid"
+            (click)="moveToNextStep()">
+      {{ dialogMode === 'add' && currentStep === 1 ? 'Next' : 'Save' }}
+    </button>
+  </div>
+</div>

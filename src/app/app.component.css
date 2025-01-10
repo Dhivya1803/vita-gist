@@ -1,0 +1,50 @@
+*{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: 400;
+}
+
+
+.app-container {
+    display: flex;
+    height: 100vh;
+  }
+
+  .main-content {
+    flex: 1;
+    margin-left: 250px;
+    transition: margin-left 0.3s ease;
+  }
+
+  .sidebar-collapsed .main-content {
+    margin-left: 60px;
+  }
+
+  .page-content {
+    padding: 80px 1rem 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .main-content {
+      margin-left: 0;
+    }
+
+    .sidebar-collapsed .main-content {
+      margin-left: 0;
+    }
+  }
+
+  .main-container {
+    min-height: 100vh;
+  }
+
+  .main-container.auth-layout {
+    padding: 0;
+    margin: 0;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  }
+
+  /* When header/sidebar are visible */
+  .main-container:not(.auth-layout) {
+    margin-left: 250px; /* adjust based on your sidebar width */
+    padding-top: 64px; /* adjust based on your header height */
+  }

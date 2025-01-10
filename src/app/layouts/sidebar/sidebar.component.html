@@ -1,0 +1,70 @@
+<aside [class.collapsed]="(isCollapsed$ | async)" class="sidebar">
+    <!-- Logo Section -->
+    <div class="logo-section">
+      <img src="assets/images/vitalogo.png" alt="VitaGist" class="logo" />
+      <span class="logo-text">Vita<span class="half-text">Gist</span></span>
+    </div>
+  
+    <!-- Navigation Links -->
+    <nav class="nav-links">
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-item" [routerLinkActiveOptions]="{ exact: true }"
+         [class.collapsed]="(isCollapsed$ | async)" (click)="onOptionClick('Dashboard')">
+        <i class="material-icons">dashboard</i>
+        <span class="nav-text" *ngIf="!(isCollapsed$ | async)">Dashboard</span>
+      </a>
+  
+      <a routerLink="/health" routerLinkActive="active" class="nav-item" [routerLinkActiveOptions]="{ exact: true }"
+      [class.collapsed]="(isCollapsed$ | async)" (click)="onOptionClick('Health')">
+     <i class="material-icons">favorite</i>
+     <span class="nav-text" *ngIf="!(isCollapsed$ | async)">Health</span>
+   </a>
+
+   <a routerLink="/documents" routerLinkActive="active" class="nav-item" [routerLinkActiveOptions]="{ exact: true }"
+      [class.collapsed]="(isCollapsed$ | async)" (click)="onOptionClick('Documents')">
+     <i class="material-icons">description</i>
+     <span class="nav-text" *ngIf="!(isCollapsed$ | async)">Documents</span>
+   </a>
+
+   <a routerLink="/connections" routerLinkActive="active" class="nav-item" [routerLinkActiveOptions]="{ exact: true }"
+      [class.collapsed]="(isCollapsed$ | async)" (click)="onOptionClick('Connections')">
+     <i class="material-icons">groups</i>
+     <span class="nav-text" *ngIf="!(isCollapsed$ | async)">Connections</span>
+   </a>
+
+   <a routerLink="/calendar" routerLinkActive="active" class="nav-item" [routerLinkActiveOptions]="{ exact: true }"
+      [class.collapsed]="(isCollapsed$ | async)" (click)="onOptionClick('Calendar')">
+     <i class="material-icons">event</i>
+     <span class="nav-text" *ngIf="!(isCollapsed$ | async)">Calendar</span>
+   </a>
+
+   <a routerLink="/chats" routerLinkActive="active" class="nav-item" [routerLinkActiveOptions]="{ exact: true }"
+      [class.collapsed]="(isCollapsed$ | async)" (click)="onOptionClick('Chats')">
+     <i class="material-icons">forum</i>
+     <span class="nav-text" *ngIf="!(isCollapsed$ | async)">Chats</span>
+   </a>
+
+   <a routerLink="/notifications" routerLinkActive="active" class="nav-item" [routerLinkActiveOptions]="{ exact: true }"
+      [class.collapsed]="(isCollapsed$ | async)" (click)="onOptionClick('Notifications')">
+     <i class="material-icons">notifications</i>
+     <span class="nav-text" *ngIf="!(isCollapsed$ | async)">Notifications</span>
+   </a>
+
+   <a routerLink="/audittrails" routerLinkActive="active" class="nav-item" [routerLinkActiveOptions]="{ exact: true }"
+      [class.collapsed]="(isCollapsed$ | async)" (click)="onOptionClick('AuditTrails')">
+     <i class="material-icons">history</i>
+     <span class="nav-text" *ngIf="!(isCollapsed$ | async)">Audit Trails</span>
+   </a>
+
+   <a routerLink="/settings" routerLinkActive="active" class="nav-item" [routerLinkActiveOptions]="{ exact: true }"
+      [class.collapsed]="(isCollapsed$ | async)" (click)="onOptionClick('Settings')">
+     <i class="material-icons">settings</i>
+     <span class="nav-text" *ngIf="!(isCollapsed$ | async)">Settings</span>
+   </a>
+  
+      <a routerLink="" class="nav-item" [class.collapsed]="(isCollapsed$ | async)" (click)="onLogout()">
+        <i class="material-icons">logout</i>
+        <span class="nav-text" *ngIf="!(isCollapsed$ | async)">Logout</span>
+      </a>
+    </nav>
+  </aside>
+  

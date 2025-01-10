@@ -1,0 +1,30 @@
+<div class="mat-dialog">
+<h2  class="title-cat" mat-dialog-title>Add New Category</h2>
+    <div mat-dialog-content>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Category Name</mat-label>
+        <input matInput [(ngModel)]="categoryName" />
+      </mat-form-field>
+      <h3>Choose Icon</h3>
+      <div class="icon-grid">
+        <button
+          *ngFor="let icon of icons; let i = index"
+          mat-icon-button
+          [color]="selectedIconIndex === i ? 'primary' : ''"
+          (click)="selectIcon(i)"
+        >
+          <mat-icon>{{ icon }}</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div mat-dialog-actions align="end">
+      <button mat-button (click)="onCancel()">Cancel</button>
+      <button
+        mat-button
+        [disabled]="!categoryName || selectedIconIndex === null"
+        (click)="onSave()"
+      >
+        Create
+      </button>
+    </div>
+  </div>

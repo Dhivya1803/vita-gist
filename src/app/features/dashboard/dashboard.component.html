@@ -1,0 +1,137 @@
+<!-- dashboard.component.html -->
+<div class="dashboard-container">
+  <div class="dashboard-content">
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Health Section -->
+      <section class="main-section">
+        <h2>Health</h2>
+        <div class="tabs">
+          <button class="tab active">
+            Medication <span class="badge">25</span>
+          </button>
+          <button class="tab">Devices</button>
+        </div>
+        <section class="section">
+        <div class="section-content">
+          <div class="header">
+            <h3>Today's Medication <span class="counter">9</span></h3>
+            <a href="#" class="view-all">View All</a>
+          </div>
+
+          <div class="medication-grid">
+            <div class="medication-card" *ngFor="let med of medications">
+              <div class="med-icon">💊</div>
+              <div class="med-details">
+                <h4>{{med.name}}</h4>
+                <p>{{med.dosage}} • {{med.timing}}</p>
+              </div>
+              <div class="due-time">Due - {{med.dueTime}}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      </section>
+
+      <!-- Documents Section -->
+      <section class="main-section">
+        <h2>Documents</h2>
+        <div class="tabs">
+          <button class="tab">Belgium</button>
+          <button class="tab active">
+            India <span class="badge">22</span>
+          </button>
+          <button class="tab">China</button>
+          <button class="tab">Denmark</button>
+        </div>
+        <section class="section">
+        <div class="section-content">
+          <div class="header">
+            <h3>Expiring Documents <span class="counter">10</span></h3>
+            <a href="#" class="view-all">View All</a>
+          </div>
+
+          <div class="document-grid">
+            <div class="document-card" *ngFor="let doc of documents">
+              <div class="doc-icon">📄</div>
+              <div class="doc-details">
+                <h4>{{doc.name}}</h4>
+                <p class="expiry">{{doc.expiryDays}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      </section>
+
+      <!-- Connections Section -->
+      <section class="main-section">
+        <h2>Connections</h2>
+        <div class="tabs">
+          <button class="tab active">
+            Friends & Family <span class="badge">12</span>
+          </button>
+          <button class="tab">Legal & Finance</button>
+          <button class="tab">Others</button>
+        </div>
+        <section class="section">
+        <div class="section-content">
+          <div class="header">
+            <h3>New Requests <span class="counter">9</span></h3>
+            <a href="#" class="view-all">View All</a>
+          </div>
+
+          <div class="connections-grid">
+            <div class="connection-card" *ngFor="let conn of connections">
+              <button class="close-btn">×</button>
+              <img [src]="conn.avatar" [alt]="conn.name" class="avatar">
+              <div class="connection-details">
+                <h4>{{conn.name}}</h4>
+                <p>{{conn.timeAgo}}</p>
+                <button class="accept-btn">Accept</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      </section>
+    </div>
+
+    <!-- Right Sidebar -->
+    <div class="right-sidebar">
+      <div class="time-widget">
+        <div class="time">
+          {{currentTime$ | async | date:'h:mm'}}
+          <span>{{currentTime$ | async | date:'a'}}</span>
+        </div>
+        <div class="divider"></div>
+        <div class="date">
+          <div class="weekday">{{currentTime$ | async | date:'EEEE' | uppercase}}</div>
+          <div class="date-display">
+            <div class="day">{{currentTime$ | async | date:'dd'}}</div>
+            <div class="month-year">
+              <div>{{currentTime$ | async | date:'MMMM'}}</div>
+              <div>{{currentTime$ | async | date:'yyyy'}}</div>
+            </div>
+            <div class="weather">🌤️</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="calendar-preview">
+        <img src="/assets/images/calendarintro.png" alt="Calendar">
+        <div class="preview-content">
+          <h3>Your Week At A Glance</h3>
+          <p>Keep your schedule on track with our easy-to-use interactive calendar!</p>
+          <button class="explore-btn">Explore Now  <span style="font-weight:600">→</span></button>
+        </div>
+      </div>
+
+      <div class="chat-card">
+         <img class="bgcircle" src="assets\images\Ornament.svg" alt="background">
+        <h3>Discover Exciting Conversations!</h3>
+        <p>Brighten your day with a chat. Curious? Let's start!</p>
+        <button class="start-chat-btn">Start Chat  <span style="font-weight:600"> →</span></button>
+    </div>
+  </div>
+</div>
