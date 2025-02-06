@@ -30,7 +30,7 @@
      <i class="material-icons">groups</i>
      <span class="nav-text" *ngIf="!(isCollapsed$ | async)">Connections</span>
    </a>
-
+   
    <a routerLink="/calendar" routerLinkActive="active" class="nav-item" [routerLinkActiveOptions]="{ exact: true }"
       [class.collapsed]="(isCollapsed$ | async)" (click)="onOptionClick('Calendar')">
      <i class="material-icons">event</i>

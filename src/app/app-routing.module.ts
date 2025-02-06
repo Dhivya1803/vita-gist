@@ -47,8 +47,12 @@ export const routes: Routes = [
         {
           path: 'connections',
           loadChildren: () => import('./features/connections/connections.module')
-            .then(m => m.ConnectionsModule)
-        },
+            .then(m => {
+              console.log('ConnectionsModule loaded'); // Debugging
+              return m.ConnectionsModule;
+            })
+        }
+        ,
         {
           path: 'calendar',
           loadChildren: () => import('./features/calendar/calendar.module')
