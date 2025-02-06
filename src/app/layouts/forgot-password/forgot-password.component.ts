@@ -10,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.css', '../../shared/styles/common.css']
 })
+
 export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm: FormGroup;
   isLoading = false;

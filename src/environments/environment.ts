@@ -9,6 +9,7 @@ export const environment = {
       endpoints: {
         login: '/login',
         register: '/register',
+        countries: '/countries',
         emailVerification: {
           resendToken: '/register/email/token/resend',
           verifyToken: '/register/email/token/verify'
@@ -36,8 +37,8 @@ export const environment = {
     tokenExpiryKey: 'token_expiry',
     userKey: 'current_user'
   },
-  googleAuth: {
-    clientId: 'your-google-client-id'
+  assets: {
+    flagImagesPath: '/assets/images/flag/',
   },
-  apiUrl: 'http://localhost:3000/api'
+  apiUrl: 'https://api.digicoffer.com/consumer'
 };

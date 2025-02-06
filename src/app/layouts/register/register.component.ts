@@ -46,18 +46,15 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.loadCountries();
-    // Check if user is already logged in
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/dashboard']);
     }
   }
 
   private loadCountries(): void {
-    // TODO: Replace with actual API call when ready
     this.countries = [
       { code: 'US', name: 'United States', flag: 'usa.png' },
       { code: 'UK', name: 'United Kingdom', flag: 'uk.png' },
-      // Add more countries as needed
     ];
   }
 
@@ -75,17 +72,18 @@ export class RegisterComponent implements OnInit {
       };
 
       this.authService.register(userData).subscribe({
-        next: () => {
-          this.snackBar.open('Registration successful! Please log in.', 'Close', { duration: 3000 });
-          this.router.navigate(['/login']);
+        next: (response) => {
+          this.snackBar.open('Registration successful! Verify your email.', 'Close', { duration: 3000 });
+          this.router.navigate(['/verify-email'], { 
+            queryParams: { 
+              email: userData.email 
+            } 
+          });
         },
         error: (error) => {
           this.isLoading = false;
           this.errorMessage = error.error?.message || 'Registration failed. Please try again.';
           this.snackBar.open(this.errorMessage, 'Close', { duration: 3000 });
-        },
-        complete: () => {
-          this.isLoading = false;
         }
       });
     } else {
@@ -107,4 +105,3 @@ export class RegisterComponent implements OnInit {
     });
   }
 }
-

@@ -19,12 +19,12 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
+    BrowserAnimationsModule, 
     FormsModule,
     ReactiveFormsModule
   ],
   providers: [
-    provideClientHydration(),    
+    provideClientHydration(),
     provideHttpClient(withFetch()),
     {
       provide: HTTP_INTERCEPTORS,

@@ -31,8 +31,7 @@ export class SidebarComponent {
     this.router.navigate([`/${page.toLowerCase()}`]);
   }
 
-  onLogout(): void {
-    this.authService.logout(); // Handle session cleanup
+  onLogout(): void {// Handle session cleanup
     this.router.navigate(['/login']);
   }
 }

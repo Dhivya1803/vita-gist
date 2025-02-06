@@ -59,7 +59,7 @@ export class DocumentsComponent implements OnInit {
     { label: 'Sort by Date', icon: 'date_range', action: () => this.onSort('date') },
   ];
 
-  dropdownOptions = [
+   dropdownOptions = [
     { label: 'Document', icon: 'description', action: this.onAddDocument.bind(this) },
     { label: 'Category', icon: 'category', action: this.onAddCategory.bind(this) },
   ];
